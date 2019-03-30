@@ -2,6 +2,7 @@ package com.teo.store.model;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Movie extends Event {
 
@@ -18,5 +19,14 @@ public class Movie extends Event {
     @Override
     public String toString() {
         return "Movie{" + "type=" + Arrays.toString(type) + '}' + "\n" + super.toString();
+    }
+
+    public void makeNewEvent(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Number of types of the movie (Drama, Thriller, Comedy, Science Fiction):");
+        int numberOfTypes = scanner.nextInt();
+        for(int i=0;i<numberOfTypes;i++)
+            this.type[i]=scanner.next();
+        super.makeNewEvent();
     }
 }

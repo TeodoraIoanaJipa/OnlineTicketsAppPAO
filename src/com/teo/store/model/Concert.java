@@ -12,6 +12,7 @@ public class Concert extends Event {
     }
 
     public Concert(String[] artists) {
+        super();
         Artists = artists;
     }
 

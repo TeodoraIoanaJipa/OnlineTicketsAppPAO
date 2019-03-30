@@ -26,5 +26,6 @@ public class StandUpShow extends Event {
         int nrArtists = scanner.nextInt();
         for(int i=0;i<nrArtists;i++)
             this.artists[i]=scanner.next();
+        super.makeNewEvent();
     }
 }

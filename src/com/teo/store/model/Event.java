@@ -1,5 +1,6 @@
 package com.teo.store.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -23,15 +24,20 @@ public class Event {
         this.eventLocation = eventLocation;
     }
 
+    public Location getEventLocation() {
+        return eventLocation;
+    }
+
+    public void setEventLocation(Location eventLocation) {
+        this.eventLocation = eventLocation;
+    }
+
     @Override
     public String toString() {
-        return "Event{" + "id=" + id +
-                ", name='" + name + '\'' +
-                ", smallDescription='" + smallDescription + '\'' +
-                ", startData=" + startDate +
-                ", endDate=" + endDate +
-                ", eventLocation=" + eventLocation +
-                '}';
+        SimpleDateFormat dt = new SimpleDateFormat("EEEE, dd MMMM yy hh:mm");
+        return "id=" + id + ", name='" + name + '\'' +
+                ", smallDescription='" + smallDescription + '\'' + ",\n startData=" + dt.format(startDate) +
+                ", endDate=" + dt.format(endDate) + ", eventLocation=" + eventLocation + "\n";
     }
 
     public void makeNewEvent(){
@@ -48,6 +54,8 @@ public class Event {
             date.setMonth(scanner.nextInt());
             System.out.println("Type the day: ");
             date.setDate(scanner.nextInt());
+            System.out.println("Type the hour: ");
+            date.setHours(scanner.nextInt());
             this.startDate = date;
             this.endDate = date;
             System.out.println("Type the id of the location: ");
