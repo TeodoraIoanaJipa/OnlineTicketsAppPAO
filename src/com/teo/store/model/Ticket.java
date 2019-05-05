@@ -2,12 +2,16 @@ package com.teo.store.model;
 
 public class Ticket {
     private int id;
-    private Event event;
     private double price;
+    private String seat;
+    private Event event;
+    private Consumer owner;
 
-    public Ticket(int id, Event event, double price) {
+    public Ticket(int id, double price, String seat, Event event, Consumer owner) {
         this.id = id;
-        this.event = event;
         this.price = price;
+        this.seat = seat;
+        this.event = event;
+        this.owner = owner;
     }
 }

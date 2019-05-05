@@ -13,7 +13,7 @@ public class Event {
     private Date endDate;
     private Location eventLocation;
 
-    public Event() { }
+    public Event() {}
 
     public Event(int id, String name, String smallDescription, Date startData, Date endDate, Location eventLocation) {
         this.id = id;
@@ -22,6 +22,46 @@ public class Event {
         this.startDate = startData;
         this.endDate = endDate;
         this.eventLocation = eventLocation;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSmallDescription() {
+        return smallDescription;
+    }
+
+    public void setSmallDescription(String smallDescription) {
+        this.smallDescription = smallDescription;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Location getEventLocation() {
@@ -35,8 +75,7 @@ public class Event {
     @Override
     public String toString() {
         SimpleDateFormat dt = new SimpleDateFormat("EEEE, dd MMMM yy hh:mm");
-        return "id=" + id + ", name='" + name + '\'' +
-                ", smallDescription='" + smallDescription + '\'' + ",\n startData=" + dt.format(startDate) +
+        return id + ",\n"+ name + "," + smallDescription + ",\n startData=" + dt.format(startDate) +
                 ", endDate=" + dt.format(endDate) + ", eventLocation=" + eventLocation + "\n";
     }
 
@@ -48,7 +87,7 @@ public class Event {
             System.out.println("Type the name of the event: ");
             this.name = scanner.next();
             System.out.println("Type the description of the event: ");
-            this.smallDescription = scanner.next();
+            this.smallDescription = scanner.nextLine();
             System.out.println("Type the month: ");
             Date date = new Date();
             date.setMonth(scanner.nextInt());

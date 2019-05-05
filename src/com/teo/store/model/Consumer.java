@@ -6,9 +6,18 @@ public class Consumer {
     private String firstName;
     private String lastName;
     private Date birthDate;
-    private String city;
-    private String country;
+    private Location address;
     private String email;
 
 
+    public Consumer(String firstName, String lastName, Date birthDate, Location address, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.email = email;
+    }
+
+    public Consumer() {
+    }
 }

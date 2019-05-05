@@ -39,6 +39,13 @@ public class EventService {
         }
     }
 
+    public void printAll(List<? extends Event> eventList){
+        int nr=0;
+        for (Event event : eventList) {
+            System.out.println(++nr +". " + event.toString());
+        }
+    }
+
     public List<Event> getEventsListByCountry(String country){
         List<Event>EventsListByCountry=new ArrayList<>();
         for (Event event : eventsList) {
@@ -65,27 +72,15 @@ public class EventService {
         return concerts;
     }
 
-    public void printAllConcerts(List<Concert> concertList){
-        int nr=0;
-        for (Concert event : concertList) {
-            System.out.println(++nr +". " + event.toString());
-        }
-    }
 
-    public List<Movie> getAllMovies(){
-        List<Movie> movies = new ArrayList<>();
+    public List<? extends Event> getAllMovies(){
+        List<Event> movies = new ArrayList<>();
         for (Event event : eventsList)
             if( event instanceof Movie)
                 movies.add((Movie) event);
         return movies;
     }
 
-    public void printAllMovies(List<Movie> movieList){
-        int nr=0;
-        for (Movie event : movieList) {
-            System.out.println(++nr +". " + event.toString());
-        }
-    }
 
     public List<StandUpShow> getAllStandUps(){
         List<StandUpShow> standups = new ArrayList<>();
@@ -95,12 +90,6 @@ public class EventService {
         return standups;
     }
 
-    public void printAllstandUps(List<StandUpShow> standList){
-        int nr=0;
-        for (StandUpShow event : standList) {
-            System.out.println(++nr +". " + event.toString());
-        }
-    }
 
     public List<TheatrePlay> getAllTheatrePlays(){
         List<TheatrePlay> plays = new ArrayList<>();
@@ -110,11 +99,5 @@ public class EventService {
         return plays;
     }
 
-    public void printAllTheatrePlays(List<TheatrePlay> playsList){
-        int nr=0;
-        for (TheatrePlay event : playsList) {
-            System.out.println(++nr +". " + event.toString());
-        }
-    }
 
 }

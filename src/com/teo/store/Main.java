@@ -1,9 +1,15 @@
 package com.teo.store;
 
 import com.teo.store.model.*;
+import com.teo.store.services.AuditService;
+import com.teo.store.services.CSVFileReader;
+import com.teo.store.services.CSVFileWriter;
 import com.teo.store.services.EventService;
 
-import java.util.Date;
+
+import javax.swing.*;
+import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -12,23 +18,30 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+        String[] filePath =
+                {"C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\events.csv",
+                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\concerts.csv",
+                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\movies.csv",
+                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\plays.csv",
+                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\standups.csv",
+                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\newevents.csv"};
 
-        Date bondate=new Date(2019,8,27);
+        CSVFileReader csvFileReader = CSVFileReader.getInstance();
 
-        Event firstEvent = new Concert(1,"Bon Jovi Concert", "Bon Jovi in concert la Sala Palatului This House is not For Sale Tour 2019",
-                bondate,new Date(2019,1,22),new Location(1,"Sala Palatului","Bucuresti","Romania"),new String[]{"Bon Jovi"});
-        Event secondEvent = new Movie(2,"Bohemiam Rhapsody", "Rami Malek playes Freddie Mercury",
-                bondate,bondate,new Location(2, "Cinema City","Bucuresti", "Romania"),new String[]{"Drama","Muzical","Biografic"});
-        Event event3 = new StandUpShow(3,"Hai sa razi!", "Hai in Mojo Club sa razi!",
-                bondate,bondate,new Location(3, "Mojo Club","Valencia", "Spania"),new String[]{"Maria Popovici","Banciu","Manciu"});
-        Event event4 = new TheatrePlay(4,"O femeie singura", "Andreea Bibiri - castigatoarea premiului Cea mai buna interpretare feminina la Festivalul National de Teatru Galati",
-                new Date(30, 5,2019),bondate,new Location(5,"Teatrul de Arta","Iasi","Romania"),false);
-        Event event5 = new TheatrePlay(4,"O femeie singura", "Andreea Bibiri - castigatoarea premiului Cea mai buna interpretare feminina la Festivalul National de Teatru Galati",
-                new Date(30, 5,2019),bondate,new Location(5,"Teatrul de Arta","Iasi","Romania"),false);
-        eventService.addEvent(firstEvent);
-        eventService.addEvent(secondEvent);
-        eventService.addEvent(event3);
-        eventService.addEvent(event4);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                OnlineTicketsForm onlineTicketsForm = new OnlineTicketsForm();
+                onlineTicketsForm.initalizeFrameWithMenu(onlineTicketsForm,eventService);
+
+            }
+        });
+
+        AuditService auditService=AuditService.getInstance();
+        for (String s : filePath) {
+            csvFileReader.readFromFile(s, eventService);
+           auditService.writeToFile("C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\audit.csv","read from " + s);
+        }
 
         while (true){
             Scanner scanner = new Scanner(System.in);
@@ -67,7 +80,17 @@ public class Main {
                         default:{ newEvent=new Event();}
                     }
                     newEvent.makeNewEvent();
+
+                    CSVFileWriter csvFileWriter = CSVFileWriter.getInstance();
+                    try {
+                        csvFileWriter.writeToFile(filePath[5],newEvent);
+                        auditService.writeToFile("C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\audit.csv","write from " + filePath[5]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     eventService.addEvent(newEvent);
+                    newEvent=null;
                     break;
                 }
                 case 2: {
@@ -75,19 +98,19 @@ public class Main {
                     break;
                 }
                 case 3: {
-                    eventService.printAllMovies(eventService.getAllMovies());
+                    eventService.printAll(eventService.getAllMovies());
                     break;
                 }
                 case 4: {
-                    eventService.printAllConcerts(eventService.getAllConcerts());
+                    eventService.printAll(eventService.getAllConcerts());
                     break;
                 }
                 case 5: {
-                    eventService.printAllstandUps(eventService.getAllStandUps());
+                    eventService.printAll(eventService.getAllStandUps());
                     break;
                 }
                 case 6: {
-                    eventService.printAllTheatrePlays(eventService.getAllTheatrePlays());
+                    eventService.printAll(eventService.getAllTheatrePlays());
                     break;
                 }
                 case 7: {
@@ -107,8 +130,6 @@ public class Main {
                 }
             }
         }
-
-
 
     }
 }

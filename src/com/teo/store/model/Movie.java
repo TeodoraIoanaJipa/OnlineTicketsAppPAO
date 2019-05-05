@@ -25,8 +25,9 @@ public class Movie extends Event {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Number of types of the movie (Drama, Thriller, Comedy, Science Fiction):");
         int numberOfTypes = scanner.nextInt();
+        type=new String[numberOfTypes];
         for(int i=0;i<numberOfTypes;i++)
-            this.type[i]=scanner.next();
+            this.type[i]=scanner.nextLine();
         super.makeNewEvent();
     }
 }
