@@ -15,34 +15,16 @@ import java.util.Scanner;
 public class Main {
 
     private static EventService eventService = EventService.getInstance();
+    private static AuditService auditService;
+    private static String[] filePath =
+            {"C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\events.csv",
+                    "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\concerts.csv",
+                    "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\movies.csv",
+                    "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\plays.csv",
+                    "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\standups.csv",
+                    "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\newevents.csv"};
 
-    public static void main(String[] args) {
-	// write your code here
-        String[] filePath =
-                {"C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\events.csv",
-                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\concerts.csv",
-                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\movies.csv",
-                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\plays.csv",
-                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\standups.csv",
-                        "C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\newevents.csv"};
-
-        CSVFileReader csvFileReader = CSVFileReader.getInstance();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                OnlineTicketsForm onlineTicketsForm = new OnlineTicketsForm();
-                onlineTicketsForm.initalizeFrameWithMenu(onlineTicketsForm,eventService);
-
-            }
-        });
-
-        AuditService auditService=AuditService.getInstance();
-        for (String s : filePath) {
-            csvFileReader.readFromFile(s, eventService);
-           auditService.writeToFile("C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\audit.csv","read from " + s);
-        }
-
+    public static void displayMenu(){
         while (true){
             Scanner scanner = new Scanner(System.in);
             System.out.println("Choose an option: ");
@@ -130,6 +112,31 @@ public class Main {
                 }
             }
         }
+
+    }
+    public static void main(String[] args) {
+        // write your code here
+
+
+        CSVFileReader csvFileReader = CSVFileReader.getInstance();
+
+        /*SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                OnlineTicketsForm onlineTicketsForm = new OnlineTicketsForm();
+                onlineTicketsForm.initalizeFrameWithMenu(onlineTicketsForm,eventService);
+
+            }
+        });*/
+
+        auditService=AuditService.getInstance();
+        for (String s : filePath) {
+            csvFileReader.readFromFile(s, eventService);
+            auditService.writeToFile("C:\\Users\\Teodora\\Documents\\fmi\\ANUL 2\\semestrul2\\PAO\\OnlineTickets\\Files\\audit.csv","read from " + s);
+        }
+        ConsumerInfo cv = new ConsumerInfo();
+        cv.show();
+        //displayMenu();
 
     }
 }
