@@ -1,16 +1,14 @@
 package com.teo.store;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 import com.teo.store.model.*;
 import com.teo.store.services.EventService;
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.control.Alert;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,15 +17,17 @@ import java.util.List;
 public class BuyTickets extends javax.swing.JFrame {
     private EventService eventService = EventService.getInstance();
     private List<Event> eventsList= new ArrayList<>();
-    private Consumer client = new Consumer();
+    private Consumer client;
     private Ticket clientsTicket = new Ticket();
     /**
      * Creates new form BuyTickets
      */
     public BuyTickets() {
+        this.client = new Consumer();
         initComponents();
     }
     public BuyTickets(Consumer consumer) {
+        this.client = new Consumer();
         client.setFirstName(consumer.getFirstName());
         client.setLastName(consumer.getLastName());
         initComponents();
@@ -52,18 +52,18 @@ public class BuyTickets extends javax.swing.JFrame {
         StandRadioButton = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         EventsList = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        ContinuaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        welcomeLabel.setFont(new java.awt.Font("Verdana", 0, 17)); // NOI18N
         welcomeLabel.setText("Bine ai venit, "+client.getFirstName()+ "!");
 
+        jLabel2.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel2.setText("Ce vrei sa achizitionezi ?");
 
+        CinemaRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         CinemaRadioButton.setText("Bilete la cinema");
         CinemaRadioButton.setName("Bilete la cinema"); // NOI18N
         CinemaRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +72,7 @@ public class BuyTickets extends javax.swing.JFrame {
             }
         });
 
+        ConcertRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         ConcertRadioButton.setText("Bilete la concert");
         ConcertRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +80,7 @@ public class BuyTickets extends javax.swing.JFrame {
             }
         });
 
+        TeatruRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         TeatruRadioButton.setText("Bilete la teatru");
         TeatruRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,6 +88,7 @@ public class BuyTickets extends javax.swing.JFrame {
             }
         });
 
+        StandRadioButton.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         StandRadioButton.setText("Bilete la StandUp");
         StandRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,33 +103,32 @@ public class BuyTickets extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(CinemaRadioButton)
-                                        .addComponent(ConcertRadioButton)
-                                        .addComponent(TeatruRadioButton)
-                                        .addComponent(StandRadioButton))
-                                .addContainerGap(79, Short.MAX_VALUE))
+                                        .addComponent(StandRadioButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                                        .addComponent(TeatruRadioButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ConcertRadioButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(CinemaRadioButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
                 jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(CinemaRadioButton)
+                                .addComponent(CinemaRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ConcertRadioButton)
+                                .addComponent(ConcertRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TeatruRadioButton)
+                                .addComponent(TeatruRadioButton, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(StandRadioButton)
-                                .addGap(0, 14, Short.MAX_VALUE))
+                                .addContainerGap(63, Short.MAX_VALUE))
         );
 
-        CinemaRadioButton.getAccessibleContext().setAccessibleName("Bilete la cinema");
         CinemaRadioButton.getAccessibleContext().setAccessibleDescription("Bilete");
 
         eventsList = eventService.getEventsList();
         EventsList.setBackground(new java.awt.Color(255, 255, 0));
         EventsList.setBorder(new javax.swing.border.MatteBorder(null));
         EventsList.setFont(new java.awt.Font("Noto Sans Light", 1, 14)); // NOI18N
-        EventsList.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        EventsList.setFont(new java.awt.Font("Verdana", 1, 13)); // NOI18N
         EventsList.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -135,93 +137,57 @@ public class BuyTickets extends javax.swing.JFrame {
         EventsList.setListData(eventsList.toArray());
         jScrollPane1.setViewportView(EventsList);
 
-        jButton1.setText("Continua");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
+        jLabel3.setText("Vizualizeaza evenimentele disponibile:");
+
+        ContinuaButton.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
+        ContinuaButton.setText("Continua");
+        ContinuaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ContinuaButtonActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Ce fel de bilet doresti?");
-
-        jRadioButton1.setText("VIP");
-
-        jRadioButton2.setText("Normal");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jRadioButton2)
-                                        .addComponent(jRadioButton1))
-                                .addGap(0, 36, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jRadioButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton2)
-                                .addContainerGap(22, Short.MAX_VALUE))
-        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(welcomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47))
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(39, 39, 39)
-                                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(46, 46, 46)
-                                                        .addComponent(jButton1)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                        .addGap(22, 22, 22)
-                                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                                        .addGap(37, 37, 37)
-                                                                        .addComponent(welcomeLabel))
-                                                                .addComponent(jLabel2)
-                                                                .addComponent(jLabel1))))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(46, 46, 46)
-                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(ContinuaButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(22, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jScrollPane1)
-                                                .addContainerGap())
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(26, 26, 26)
                                                 .addComponent(welcomeLabel)
-                                                .addGap(18, 18, 18)
+                                                .addGap(33, 33, 33)
                                                 .addComponent(jLabel2)
-                                                .addGap(18, 18, 18)
+                                                .addGap(42, 42, 42)
                                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jLabel1)
+                                                .addComponent(ContinuaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(54, 54, 54)
-                                                .addComponent(jButton1)
-                                                .addGap(95, 95, 95))))
+                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)))
+                                .addGap(23, 23, 23))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -229,9 +195,8 @@ public class BuyTickets extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,9 +268,18 @@ public class BuyTickets extends javax.swing.JFrame {
         }
         return myList;
     }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+
+    private boolean validation(){
+        if(!StandRadioButton.isSelected()&& !ConcertRadioButton.isSelected()&&
+                !CinemaRadioButton.isSelected() && !TeatruRadioButton.isSelected())
+            return false;
+
+        return true;
+    }
+
+    private void ContinuaButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        ListEventsByType le = new ListEventsByType(seeOption());
+        ListEventsByType le = new ListEventsByType(seeOption(),clientsTicket);
 
         if(StandRadioButton.isSelected()){
             clientsTicket.setEvent(new StandUpShow());
@@ -323,12 +297,28 @@ public class BuyTickets extends javax.swing.JFrame {
             clientsTicket.setEvent(new TheatrePlay());
         }
 
-        le.setVisible(true);
 
-    }
+        if(!validation()){
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new JFXPanel(); // this will prepare JavaFX toolkit and environment
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert validationAlert = new Alert(Alert.AlertType.WARNING);
+                            validationAlert.setTitle("Ooops, ceva n-a mers bine!");
+                            validationAlert.setHeaderText(null);
+                            validationAlert.setContentText("Nu ati completat unul dintre campuri.");
+                            validationAlert.show();
+                        }
+                    });
+                }
+            });
+        }
+        else
+            le.setVisible(true);
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     /**
@@ -369,19 +359,15 @@ public class BuyTickets extends javax.swing.JFrame {
     // Variables declaration - do not modify
     private javax.swing.JRadioButton CinemaRadioButton;
     private javax.swing.JRadioButton ConcertRadioButton;
+    private javax.swing.JButton ContinuaButton;
     private javax.swing.JList EventsList;
     private javax.swing.JRadioButton StandRadioButton;
     private javax.swing.JRadioButton TeatruRadioButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration
 }
-

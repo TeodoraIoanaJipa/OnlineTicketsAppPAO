@@ -4,20 +4,30 @@ public class Ticket {
     private int id;
     private boolean VIP;
     private double price;
+    private double priceVIP;
     private String seat;
     private Event event;
     private Consumer owner;
 
-    public Ticket(int id, boolean VIP, double price, String seat, Event event, Consumer owner) {
+    public Ticket(int id, boolean VIP, double price, double priceVIP, String seat, Event event, Consumer owner) {
         this.id = id;
         this.VIP = VIP;
         this.price = price;
+        this.priceVIP = priceVIP;
         this.seat = seat;
         this.event = event;
         this.owner = owner;
     }
 
     public Ticket() {
+    }
+
+    public double getPriceVIP() {
+        return priceVIP;
+    }
+
+    public void setPriceVIP(double priceVIP) {
+        this.priceVIP = priceVIP;
     }
 
     public int getId() {
@@ -66,5 +76,18 @@ public class Ticket {
 
     public void setOwner(Consumer owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", VIP=" + VIP +
+                ", price=" + price +
+                ", priceVIP=" + priceVIP +
+                ", seat='" + seat + '\'' +
+                ", event=" + event +
+                ", owner=" + owner +
+                '}';
     }
 }

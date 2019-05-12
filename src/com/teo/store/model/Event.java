@@ -1,10 +1,22 @@
 package com.teo.store.model;
 
+import com.teo.store.model.Location;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author Teodora
+ */
 public class Event {
     private int id;
     private String name;
@@ -75,8 +87,8 @@ public class Event {
     @Override
     public String toString() {
         SimpleDateFormat dt = new SimpleDateFormat("EEEE, dd MMMM yy hh:mm");
-        return id + ",\n"+ name + "," + smallDescription + ",\n startData=" + dt.format(startDate) +
-                ", endDate=" + dt.format(endDate) + ", eventLocation=" + eventLocation + "\n";
+        return name + "," + smallDescription + ". Cand? " + dt.format(startDate) +
+                ", pana la " + dt.format(endDate) + ", Unde?" + eventLocation + "\n";
     }
 
     public void makeNewEvent(){

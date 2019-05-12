@@ -60,4 +60,15 @@ public class Consumer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Consumer{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", address=" + address +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
